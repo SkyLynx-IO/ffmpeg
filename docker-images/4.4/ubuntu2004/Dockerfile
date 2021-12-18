@@ -95,6 +95,7 @@ RUN      buildDeps="autoconf \
                     pkg-config \
                     python \
                     wget \
+                    patch \
                     libssl-dev \
                     yasm \
                     zlib1g-dev" && \
