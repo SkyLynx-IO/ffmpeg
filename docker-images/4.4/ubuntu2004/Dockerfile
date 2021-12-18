@@ -601,8 +601,8 @@ RUN \
         done
 
 FROM        base AS release
-LABEL       org.opencontainers.image.authors="julien@rottenberg.info" \
-            org.opencontainers.image.source=https://github.com/jrottenberg/ffmpeg
+LABEL       org.opencontainers.image.authors="sassyn@skylynx.io" \
+            org.opencontainers.image.source=https://github.com/SkyLynx-IO/ffmpeg
 
 ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 
