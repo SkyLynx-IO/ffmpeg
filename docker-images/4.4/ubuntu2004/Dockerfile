@@ -510,8 +510,10 @@ RUN \
 ## Download ffmpeg https://ffmpeg.org/
 RUN  \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
+        curl -sLO https://patchwork.ffmpeg.org/project/ffmpeg/patch/d94bb4cd-5be8-e848-5cf2-47891adf5c6a@4g-technology.eu/raw/ && \
         curl -sLO https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
         tar -jx --strip-components=1 -f ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
+        cd libavformat/ &&  patch -u segment.c -i ../FFmpeg-devel-segment-Create-missing-directories.diff && \
         ./configure     --disable-debug  --disable-doc    --disable-ffplay   --enable-shared --enable-avresample   --enable-gpl  --extra-libs=-ldl && \
         make ;  make install
 
