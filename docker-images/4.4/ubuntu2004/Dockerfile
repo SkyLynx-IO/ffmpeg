@@ -603,7 +603,8 @@ RUN \
 
 RUN \
         useradd -M -s /bin/bash -u 1003 -g 1003 janus && \
-        useradd -M -s /bin/bash -u 33 -g 33 www-data 
+        useradd -M -s /bin/bash -u 33 -g 33 www-data && \
+        usermod -g www-data janus
  
 
 FROM        base AS release
