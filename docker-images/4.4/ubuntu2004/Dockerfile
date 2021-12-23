@@ -601,6 +601,11 @@ RUN \
           sed "s:${PREFIX}:/usr/local:g" <"$pc" >/usr/local/lib/pkgconfig/"${pc##*/}"; \
         done
 
+RUN \
+        useradd -M -s /bin/bash -u 1003 -g 1003 janus && \
+        useradd -M -s /bin/bash -u 33 -g 33 www-data 
+ 
+
 FROM        base AS release
 LABEL       org.opencontainers.image.authors="sassyn@skylynx.io" \
             org.opencontainers.image.source=https://github.com/SkyLynx-IO/ffmpeg
@@ -608,8 +613,9 @@ LABEL       org.opencontainers.image.authors="sassyn@skylynx.io" \
 ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 
 CMD         ["--help"]
-ENTRYPOINT  ["ffmpeg"]
+ENTRYPOINT  ["/root/entrypoint.sh"]
 
+COPY entrypoint.sh /root/entrypoint.sh
 COPY --from=build /usr/local /usr/local/
 
 # Let's make sure the app built correctly
