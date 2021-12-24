@@ -1,5 +1,4 @@
 #!/bin/bash
-
-su - janus
+ldconfig
 # needed to run parameters CMD
-ffmpeg $@
+gosu janus ffmpeg $@
