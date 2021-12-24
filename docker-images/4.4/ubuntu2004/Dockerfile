@@ -587,7 +587,6 @@ RUN  \
         hash -r && \
         cd tools && \
         make qt-faststart && cp qt-faststart ${PREFIX}/bin/
-
 ## cleanup
 RUN \
         ldd ${PREFIX}/bin/ffmpeg | grep opt/ffmpeg | cut -d ' ' -f 3 | xargs -i cp {} /usr/local/lib/ && \
@@ -601,17 +600,19 @@ RUN \
           sed "s:${PREFIX}:/usr/local:g" <"$pc" >/usr/local/lib/pkgconfig/"${pc##*/}"; \
         done
 
-RUN \
-        useradd -M -s /bin/bash -u 1003 -g 1003 janus && \
-        useradd -M -s /bin/bash -u 33 -g 33 www-data && \
-        usermod -g www-data janus
- 
-
 FROM        base AS release
 LABEL       org.opencontainers.image.authors="sassyn@skylynx.io" \
             org.opencontainers.image.source=https://github.com/SkyLynx-IO/ffmpeg
 
 ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
+
+RUN \
+        apt-get install sudo gosu && \
+        groupadd -g 1003 janus && \
+        useradd -m -s /bin/bash -u 1003 -g 1003 janus && \
+        usermod -g www-data janus && \
+        echo "/usr/local/lib" > /etc/ld.so.conf.d/ffmpeg.conf && \
+        echo "/usr/local/lib64" >> /etc/ld.so.conf.d/ffmpeg.conf
 
 CMD         ["--help"]
 ENTRYPOINT  ["/root/entrypoint.sh"]
