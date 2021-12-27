@@ -1,4 +1,5 @@
 #!/bin/bash
 ldconfig
+umask 013
 # needed to run parameters CMD
-gosu janus ffmpeg $@
+gosu www-data ffmpeg $@
