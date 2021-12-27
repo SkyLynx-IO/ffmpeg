@@ -609,11 +609,11 @@ ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 
 RUN \
         apt-get install sudo gosu && \
-        groupadd -g 1003 janus && \
-        useradd -m -s /bin/bash -u 1003 -g 1003 janus && \
-        usermod -g www-data janus && \
+#       groupadd -g 1003 janus && \
+#       useradd -m -s /bin/bash -u 1003 -g 1003 janus && \
+#       usermod -g www-data janus && \
         echo "/usr/local/lib" > /etc/ld.so.conf.d/ffmpeg.conf && \
-        echo "/usr/local/lib64" >> /etc/ld.so.conf.d/ffmpeg.conf 
+        echo "/usr/local/lib64" >> /etc/ld.so.conf.d/ffmpeg.conf
 
 CMD         ["--help"]
 ENTRYPOINT  ["/root/entrypoint.sh"]
@@ -623,3 +623,4 @@ COPY --from=build /usr/local /usr/local/
 
 # Let's make sure the app built correctly
 # Convenient to verify on https://hub.docker.com/r/jrottenberg/ffmpeg/builds/ console output
+
